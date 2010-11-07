@@ -1,20 +1,26 @@
-#include <tidbits/CTAssert.hpp>
+/// CTAssert has compile time checks. To test it code should not compile.
+/// however to allow automatic testing, if this define is set it will compile and omit
+/// the tests that shouldn't compile.
+
+#define ONLY_RUNTIME_TESTS
+
+// local includes
+#include <tidbits/ctassert/test_ctassert.hpp>
+
+// system includes
+#include <iostream>
+
+using namespace tidbits;
 
 int main()
 {
-	bool test = true;
+   std::cout << "TidBits Library. CTAssert Test Application." << std::endl;
 
-	// should compile
-	TIDBITS_CTASSERT( sizeof(test) < 256	, bool_cannot_be_bigger_than_265_bytes 	);
+   TestCTAssert test;
 
-	// should compile
-	TIDBITS_CTASSERT( true						, literals_should_compile						);
+   test.print_results();
 
-	// should NOT compile
-	TIDBITS_CTASSERT( false						, evaluate_to_false_should_not_compile		);
-
-	// should NOT compile
-	TIDBITS_CTASSERT( test						, not_compile_time_should_not_compile		);
+   std::cin.get();
 
 	return 0;
 }

@@ -1,3 +1,11 @@
 
 .cproject
 .project
+Debug/
+.ipch
+*.ipch
+*.sdf
+Release/
+*.suo
+*.vcxproj.filters
+*.vcxproj.user

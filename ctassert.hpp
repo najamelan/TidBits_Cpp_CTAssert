@@ -1,7 +1,7 @@
-/// \file  ctassert.hpp
+/// \file  ctassert/ctassert.hpp
 /// \brief Provides compile time assertions
 
-/** \file  ctassert.hpp
+/** \file  ctassert/ctassert.hpp
  * Code comes from Modern C++ Design: Generic Programming and Design Patterns Applied by Andrei Alexandrescu
  * http://erdani.com/book/main.html
  */
