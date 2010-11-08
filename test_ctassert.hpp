@@ -22,6 +22,9 @@ namespace tidbits
 class TestCTAssert : public UnitTesting
 {
 	public:
+		explicit  TestCTAssert(){};
+		virtual	~TestCTAssert(){};
+
 		void run_test_case();
 };
 
