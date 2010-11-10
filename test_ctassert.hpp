@@ -69,18 +69,12 @@ namespace test
 void
 TestCTAssert::run_test_case()
 {
-
-
-
 	message += "\nRunning TestCTAssert test case...\n\n";
 
-	// disable warnings about unused variable. Reset to default has to come after function body
-	// TODO check on other compilers than msvc
-	#ifdef _MSC_VER
-		#pragma warning( disable : 4189 )
-	#endif
 
-	bool test = true;
+	 bool 	test = true	;
+	(void) 	test			;		//< disable warnings about unused variable.
+
 
 
 	// Test sizeof (should compile)
@@ -122,12 +116,6 @@ TestCTAssert::run_test_case()
 	#endif
 
 }
-
-// is disabled in TestCTAssert::run_test_case
-#ifdef _MSC_VER
-#pragma warning( default : 4189 )
-#endif
-
 
 } 			// namespace tidbits
 #endif 	// Guard_4A0F60E4_5CA5_4d6a_9F3A_EFAA3F0DB6B4
