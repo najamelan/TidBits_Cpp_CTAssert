@@ -11,12 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\unit_testing\unit_testing.hpp" />
     <ClInclude Include="..\..\ctassert.hpp" />
     <ClInclude Include="..\..\test_ctassert.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\unit_testing\unit_testing.cpp" />
     <ClCompile Include="..\..\TestCTAssertApp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

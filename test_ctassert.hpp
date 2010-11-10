@@ -12,7 +12,7 @@
 #define Guard_4A0F60E4_5CA5_4d6a_9F3A_EFAA3F0DB6B4
 #define test_ctassert_hpp
 
-#include <tidbits/ctassert.hpp>
+#include <tidbits/ctassert.h>
 #include <tidbits/unit_testing.hpp>
 
 namespace tidbits
@@ -27,6 +27,29 @@ class TestCTAssert : public UnitTesting
 
 		void run_test_case();
 };
+
+// test at namespace scope
+// will not be accounted for in the test results, but helps you to check manually.
+namespace test
+{
+
+
+	TIDBITS_CTASSERT( 1<2 );
+	TIDBITS_CTASSERT( 123 );
+
+	#ifndef ONLY_RUNTIME_TESTS
+		TIDBITS_CTASSERT( 3<2 );
+		TIDBITS_CTASSERT( 0   );
+	#endif
+
+	//tidbits::CompileTimeError<((1 < 2) != 0)> Error_msg;
+	//const size_t i = sizeof( Error_msg );
+
+}
+
+	//TIDBITS_CTASSERT( sizeof( bool ) < 256	, bool_cannot_be_bigger_than_265_bytes )	;
+	//assert_true		 ( true						, LOG												)	;
+//}
 
 
 /// \brief Runs the tests for CTAssert
@@ -46,29 +69,33 @@ class TestCTAssert : public UnitTesting
 void
 TestCTAssert::run_test_case()
 {
+
+
+
 	message += "\nRunning TestCTAssert test case...\n\n";
 
 	// disable warnings about unused variable. Reset to default has to come after function body
 	// TODO check on other compilers than msvc
+	#ifdef _MSC_VER
+		#pragma warning( disable : 4189 )
+	#endif
 
-	#pragma warning( disable : 4189 )
-
-		bool test = true;
+	bool test = true;
 
 
 	// Test sizeof (should compile)
-	message += "   test bool is smaller than 256 bytes (COMPILE TIME)\n"					;
+	message += "   test bool is smaller than 256 bytes (COMPILE TIME)\n"		;
 
-	TIDBITS_CTASSERT( sizeof( test ) < 256	, bool_cannot_be_bigger_than_265_bytes )	;
-	assert_true		 ( true						, LOG												)	;
+	TIDBITS_CTASSERT( sizeof( test ) < 256	 			)								;
+	assert_true		 ( true						, LOG		)								;
 
 
 
 	// Test a literal (should compile)
-   message += "   test the literal true (COMPILE TIME)\n"									;
+   message += "   test the literal true (COMPILE TIME)\n"						;
 
-	TIDBITS_CTASSERT( true						, literals_should_compile					)	;
-	assert_true		 ( true						, LOG 											)	;
+	TIDBITS_CTASSERT( true									)								;
+	assert_true		 ( true						, LOG 	)								;
 
 
 
@@ -79,18 +106,17 @@ TestCTAssert::run_test_case()
 
 
 		// Test false literal (should NOT compile in order to pass)
-		message += "   test the literal false (COMPILE TIME)\n"				;
+		message += "   test the literal false (COMPILE TIME)\n"	;
 
-		TIDBITS_CTASSERT( false, evaluate_to_false_should_not_compile	)	;
-		assert_true		 ( false, LOG 												)	;  //< if this line compiles the test has already failed.
-
+		TIDBITS_CTASSERT( false	)											;
+		assert_true		 ( false	)											;  //< if this line is executed the test has already failed.
 
 
 		// Test a variable (should NOT compile in order to pass)
-	   message += "   test a variable (COMPILE TIME)\n"						;
+	   message += "   test a variable (COMPILE TIME)\n"			;
 
-		TIDBITS_CTASSERT( test , not_compile_time_should_not_compile	)	;
-		assert_true		 ( false, LOG 												)	; //< if this line compiles the test has already failed.
+		TIDBITS_CTASSERT( test 	)											;
+		assert_true		 ( false )											; //< if this line is executed the test has already failed.
 
 
 	#endif
@@ -98,7 +124,9 @@ TestCTAssert::run_test_case()
 }
 
 // is disabled in TestCTAssert::run_test_case
+#ifdef _MSC_VER
 #pragma warning( default : 4189 )
+#endif
 
 
 } 			// namespace tidbits
